@@ -31,10 +31,13 @@ if __name__ == '__main__':
             print('Problems arised, need to fix and reask for the desired action')
     sensors_standingupright_3D_dic = dict()
     for idx, sensor in enumerate(sensor_names):
-        #filter later
-        # bw_b, bw_a = signal.butter(2, 40, output='ba', btype = 'low', analog= True)
-        # data_treated, h = signal.freqs(bw_b, bw_a, worN= IMU_acc)
-        # IMU_filtered = np.array(data_treated).real
+        #filter
+        # temp = acc_cal[idx, :, :]
+        # fs = 50; fc = 40; N = 2
+        # w = fc/(fs/2)
+        # b, a = signal.butter(N, w, 'low')
+        # filtered = signal.filtfilt(b, a, temp, axis = 0)
+        # sensors_standingupright_3D_dic[sensor] = np.mean(filtered, axis=0)
         sensors_standingupright_3D_dic[sensor] = np.mean(np.asarray(acc_cal[idx, :, :]), axis=0)
     print('Standing upright calibration successfully!')
     
@@ -52,12 +55,18 @@ if __name__ == '__main__':
                 #Acc index 5:8
                 for idx, IMU in enumerate(IMU_list):
                     IMU_acc = np.array(IMU[5: 8])
-                    #filter later
                     acc_cal[idx,ilen,:] = IMU_acc
         else:
             print('Problems arised, need to fix and reask for the desired action')
     sensors_sittingdown_3D_dic = dict()
     for idx, sensor in enumerate(sensor_names):
+        # filter
+        # temp = acc_cal[idx, :, :]
+        # fs = 50; fc = 40; N = 2
+        # w = fc/(fs/2)
+        # b, a = signal.butter(N, w, 'low')
+        # filtered = signal.filtfilt(b, a, temp, axis = 0)
+        # sensors_standingupright_3D_dic[sensor] = np.mean(filtered, axis=0)
         sensors_sittingdown_3D_dic[sensor] = np.mean(np.asarray(acc_cal[idx, :, :]), axis=0)
     print('Sitting down calibration successfully!')
     
